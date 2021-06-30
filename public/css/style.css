@@ -1,0 +1,28 @@
+*{ box-sizing: border-box }
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: max-content auto max-content;
+  grid-template-areas: 'header' 'main_body' 'footer';
+  grid-gap: 1px; 
+  min-width: 250px; 
+  margin: 0;
+  padding: 10px;
+}
+.header {
+  grid-area: header;
+}
+.main_body {
+  grid-area: main_body;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: flex-start!important;  
+}
+.footer {
+  grid-area: footer;
+  flex-direction: column;
+}
