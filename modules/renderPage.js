@@ -1,37 +1,16 @@
-const {addCookies} = require('./service');
-
-const DATA = {
-    errors : {
-        errMessage : '',
-        SERVER_ERROR : ''
-    },
-    permission : {  }
-};
-
-const clearDATA = () => {
-
-};
-
-
-const renderPage = (req, res, pageName = 'main', err = '') => {
-    clearDATA();
+module.exports = (req, res, pageName, err = '') => {
+    const DATA = require('./user').DATA;
+    require('./user').clearDATA();
     if (err !== '') {        
-        DATA.errors.SERVER_ERROR = `SERVER ERROR: ${err}`;
-        res.render(pageName, { DATA }); 
+        DATA.errors.SERVER_ERROR = 'SERVER ERROR: 500 (Internal Server Error)';
+        console.log('SERVER ERROR:', err);
+        res.status(500).render('main', { DATA });
     } else {
-        if (pageName === 'exit') {
-            addCookies(req, res, '', '-1');
-            res.redirect('/'); 
-        } else {           
-            // getUser(req, res, pageName)
-            // .then(() => { log("DATA", DATA) })
-            // .then(() => { res.render(pageName, { DATA }) });
+        if (req.url === '/' || pageName === undefined || pageName === 'main') { res.render('main', { DATA }) }; 
+        if (req.url !== '/') { res.render(pageName, { DATA }) };
 
-            res.render(pageName, { DATA })
-        };   
+        // getUser(req, res, pageName)
+        // .then(() => { log("DATA", DATA) })
+        // .then(() => { res.render(pageName, { DATA }) });     
     };
-};
-
-module.exports = {
-    renderPage
 };

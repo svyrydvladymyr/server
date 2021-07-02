@@ -4,5 +4,13 @@
     <%- include("./parts/head.ejs") %>
 </head>
 <body>
-    <p>Node JS Server</p>
+    <div style="height: max-content;">
+        <p>Node JS Server</p>
+        <a href="/google">google</a><br><br><br>
+        <a href="/facebook">facebook</a><br><br><br>
+        <a href="/linkedin">linkedin</a><br><br><br>
+        <a onclick="exit()">EXIT</a><br><br><br>
+    </div>
+    <p><%- DATA.errors.SERVER_ERROR %></p>
+    <script src="./js/js.js"></script>
 </body>

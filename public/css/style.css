@@ -21,6 +21,7 @@ body {
   margin: 0 auto;
   flex-direction: column;
   justify-content: flex-start!important;  
+  
 }
 .footer {
   grid-area: footer;

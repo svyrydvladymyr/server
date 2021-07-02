@@ -9,7 +9,7 @@ const users = () => {
         surname VARCHAR(80) NOT NULL,
         email VARCHAR(60) DEFAULT '',
         emailverified VARCHAR(60) DEFAULT '',
-        birthday DATE DEFAULT '',
+        birthday DATE,
         gender VARCHAR(11) DEFAULT '',
         provider VARCHAR(40),                   
         date_registered DATETIME

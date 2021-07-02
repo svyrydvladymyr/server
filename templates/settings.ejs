@@ -1,0 +1,15 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <%- include("./parts/head.ejs") %>
+</head>
+<body>
+    <% if(DATA.errors.error404 !== '') { %>
+        <%- DATA.errors.error404 %>
+    <% } else { %>
+        <div style="height: max-content;">
+            <p>Settings</p>
+        </div>
+    <% } %>
+</body>

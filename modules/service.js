@@ -1,18 +1,18 @@
-const transliteration = require('transliteration.cyr');
+// const transliteration = require('transliteration.cyr');
 const Cookies = require('cookies');
 const fs = require('fs');
 
-
 //transliteration
-const translit = word => {return transliteratedValue = transliteration.transliterate(word)};
+const translit = word => {return transliteratedValue = require('transliteration.cyr').transliterate(word)};
 
 //client token
 const clienttoken = (req, res) => new Cookies(req, res, {"keys":['volodymyr']}).get('sessionisdd', {signed:true});
 
 //add or clear Cookies
 const addCookies = (req, res, token, param) => {
+    console.log('param', param);
     const cookies = new Cookies(req, res, {"keys":['volodymyr']});
-    cookies.set('sessionisadd', `${token}`, {maxAge: `${param}`, path: '/', signed:true});
+    cookies.set('sessionisadd', `${token}`, {maxAge: `${param}`, path: '/', signed:true});    
 };
 
 //generate token
@@ -82,8 +82,28 @@ let checOnTrueVal = (el) => {
     return res;    
 }
 
+//get table record
+const getTableRecord = (sql) => {
+    return new Promise((resolve) => { 
+        con.query(sql, function (error, result) { 
+            error ? resolve({'error': error}) : resolve(result) 
+        }) 
+    });
+};
 
+//check the authenticity of the authorization
+const autorisationCheck = async (req, res) => {
+    return await getTableRecord(`SELECT userid FROM users WHERE token = '${clienttoken(req, res)}'`)
+    .then((user) => { 
+        return (user.err || user == '') ? false : user[0].userid; 
+    });
+};
 
+//logout
+const logOut = (req, res) => {
+    addCookies(req, res, '', '-1');
+    res.redirect('/'); 
+};
 
 module.exports = {
     translit,
@@ -93,5 +113,8 @@ module.exports = {
     addCookies,
     readyFullDate,
     checOnTrueVal,
-    accessLog
+    accessLog,
+    getTableRecord,
+    logOut,
+    autorisationCheck
 }
